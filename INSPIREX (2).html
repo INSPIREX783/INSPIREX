@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INSPIREX — Discipline. Psychology. Power.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+:root{
+  --g:#C9A84C;--gl:#F0D080;--gd:#7A6230;--gx:#3a2d0f;
+  --ob:#060608;--dp:#0c0c0f;--s1:#131316;--s2:#1a1a1e;--s3:#222228;
+  --tx:#F2EDE4;--mu:#7a7870;--mu2:#555450;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--ob);color:var(--tx);font-family:'DM Sans',sans-serif;overflow-x:hidden;cursor:none;}
+#cursor{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--g);pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width 0.3s,height 0.3s;mix-blend-mode:difference;}
+#cursor-ring{position:fixed;width:36px;height:36px;border-radius:50%;border:1px solid rgba(201,168,76,0.5);pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:all 0.12s ease-out;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9000;opacity:0.35;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 5rem;transition:all 0.4s;}
+nav.scrolled{background:rgba(6,6,8,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,0.08);}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:0.25em;color:var(--g);text-decoration:none;}
+.nav-links{display:flex;align-items:center;gap:3rem;}
+.nav-links a{text-decoration:none;color:var(--mu);font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:500;transition:color 0.3s;}
+.nav-links a:hover{color:var(--g);}
+.nav-admin{padding:0.55rem 1.5rem;border:1px solid var(--gd);color:var(--g);font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;background:transparent;cursor:pointer;transition:all 0.3s;font-family:'DM Sans',sans-serif;font-weight:500;}
+.nav-admin:hover{background:var(--g);color:#000;}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:0 5rem;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 100% 80% at 50% -10%,#1c0e00 0%,var(--ob) 65%);}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.03) 1px,transparent 1px);background-size:80px 80px;}
+.hero-vignette{position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%,transparent 30%,rgba(6,6,8,0.6) 100%);}
+.hero-content{position:relative;z-index:2;max-width:1000px;}
+.hero-tag{display:inline-flex;align-items:center;gap:1rem;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--g);margin-bottom:2.5rem;font-weight:500;}
+.hero-tag::before{content:'';width:50px;height:1px;background:linear-gradient(to right,transparent,var(--gd));}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(3.5rem,9vw,8rem);font-weight:900;line-height:0.9;letter-spacing:-0.03em;margin-bottom:2rem;}
+.ht1{display:block;color:var(--tx);}
+.ht2{display:block;font-style:italic;background:linear-gradient(135deg,var(--gl),var(--g),var(--gd));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.ht3{display:block;color:rgba(242,237,228,0.1);font-size:0.55em;}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:var(--mu);font-style:italic;line-height:1.8;max-width:560px;margin-bottom:3.5rem;}
+.hero-actions{display:flex;align-items:center;gap:2rem;flex-wrap:wrap;}
+.btn-gold{padding:1rem 2.8rem;background:linear-gradient(135deg,var(--g),#9a6f28);color:#000;font-weight:700;font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.4s;text-decoration:none;display:inline-block;}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(201,168,76,0.35);}
+.btn-outline{padding:1rem 2.8rem;background:transparent;color:var(--tx);font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;border:1px solid rgba(242,237,228,0.2);cursor:pointer;transition:all 0.3s;text-decoration:none;display:inline-block;font-weight:500;}
+.btn-outline:hover{border-color:var(--g);color:var(--g);}
+.hero-stats{position:absolute;bottom:3rem;right:5rem;display:flex;gap:3rem;}
+.stat{text-align:right;}
+.stat-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--g);}
+.stat-label{font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mu2);margin-top:0.2rem;}
+
+/* ABOUT */
+#about{padding:8rem 5rem;background:var(--dp);position:relative;overflow:hidden;}
+#about::before{content:'INSPIREX';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Bebas Neue',sans-serif;font-size:22vw;color:rgba(201,168,76,0.018);white-space:nowrap;pointer-events:none;letter-spacing:0.1em;}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;position:relative;z-index:2;}
+.about-eyebrow{font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--g);margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;}
+.about-eyebrow::before{content:'';width:30px;height:1px;background:var(--gd);}
+.about-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;line-height:1.05;margin-bottom:2rem;}
+.about-title em{font-style:italic;color:var(--g);}
+.about-body{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--mu);line-height:1.9;margin-bottom:1.5rem;}
+.pillars{margin-top:2.5rem;display:flex;flex-direction:column;gap:1rem;}
+.pillar{display:flex;align-items:flex-start;gap:1.2rem;padding:1.2rem;border:1px solid rgba(201,168,76,0.1);transition:all 0.3s;}
+.pillar:hover{border-color:rgba(201,168,76,0.3);background:rgba(201,168,76,0.03);}
+.p-icon{width:36px;height:36px;border:1px solid var(--gd);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;color:var(--g);}
+.p-text h4{font-size:0.85rem;font-weight:600;margin-bottom:0.3rem;}
+.p-text p{font-size:0.78rem;color:var(--mu);line-height:1.6;}
+.about-visuals{display:flex;flex-direction:column;gap:1.5rem;}
+.vis-card{position:relative;overflow:hidden;border:1px solid rgba(201,168,76,0.1);transition:border-color 0.3s;}
+.vis-card:hover{border-color:rgba(201,168,76,0.25);}
+.vis-card:hover svg{transform:scale(1.03);}
+.vis-card svg{transition:transform 0.6s ease;display:block;width:100%;}
+.vis-cap{position:absolute;bottom:0;left:0;right:0;padding:1.2rem 1.5rem;background:linear-gradient(to top,rgba(6,6,8,0.95),transparent);}
+.vis-cap h4{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;margin-bottom:0.15rem;}
+.vis-cap p{font-size:0.6rem;letter-spacing:0.15em;color:var(--g);text-transform:uppercase;}
+.vis-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+
+/* GALLERY */
+#gallery{padding:6rem 5rem;background:var(--ob);}
+.gal-header{text-align:center;margin-bottom:4rem;}
+.sec-tag{font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--g);display:block;margin-bottom:1rem;}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;}
+.mosaic{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:280px 280px;gap:1.5rem;}
+.gal-item{position:relative;overflow:hidden;border:1px solid rgba(201,168,76,0.08);}
+.gal-item:nth-child(1){grid-row:span 2;}
+.gal-item:nth-child(4){grid-column:span 2;}
+.gal-item:hover .ga svg{transform:scale(1.07);}
+.gal-item:hover .gi{opacity:1;transform:translateY(0);}
+.ga{width:100%;height:100%;overflow:hidden;}
+.ga svg{transition:transform 0.7s ease;display:block;}
+.gi{position:absolute;bottom:0;left:0;right:0;padding:1.8rem;background:linear-gradient(to top,rgba(6,6,8,0.97),transparent);opacity:0;transform:translateY(8px);transition:all 0.4s;}
+.gi h3{font-family:'Playfair Display',serif;font-size:1.05rem;margin-bottom:0.25rem;}
+.gi p{font-size:0.65rem;color:var(--g);letter-spacing:0.12em;text-transform:uppercase;}
+
+/* BOOKS */
+#books{padding:6rem 5rem;background:var(--dp);}
+.books-hrow{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:4rem;gap:1rem;flex-wrap:wrap;}
+.adm-strip{display:flex;align-items:center;gap:0.8rem;}
+.adm-badge{background:var(--g);color:#000;padding:0.2rem 0.7rem;font-size:0.58rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;}
+.bks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2rem;}
+.bk{background:var(--s1);border:1px solid rgba(201,168,76,0.1);transition:all 0.5s;overflow:hidden;}
+.bk:hover{transform:translateY(-6px);border-color:rgba(201,168,76,0.3);box-shadow:0 30px 80px rgba(0,0,0,0.6);}
+.bk-cov{height:280px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:1.8rem;}
+.bk-bg{position:absolute;inset:0;background:linear-gradient(145deg,#020005,#08001a,#020005);}
+.bk-lines{position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(201,168,76,0.025) 20px,rgba(201,168,76,0.025) 21px);}
+.bk-emb{position:absolute;top:50%;left:50%;transform:translate(-50%,-55%);opacity:0.06;}
+.bk-info{position:relative;z-index:2;}
+.bk-info h3{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;line-height:1.2;margin-bottom:0.4rem;}
+.bk-auth{font-size:0.65rem;letter-spacing:0.15em;color:var(--g);text-transform:uppercase;}
+.bk-body{padding:1.8rem;}
+.tags{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem;}
+.tag{font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.65rem;border:1px solid rgba(201,168,76,0.2);color:var(--gd);}
+.bk-desc{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--mu);line-height:1.8;margin-bottom:1.8rem;font-style:italic;}
+.bk-foot{display:flex;align-items:center;justify-content:space-between;}
+.bk-price{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--g);}
+.bk-price small{font-size:0.62rem;color:var(--mu);font-weight:400;display:block;font-family:'DM Sans',sans-serif;}
+.btn-rd{padding:0.6rem 1.4rem;border:1px solid var(--gd);color:var(--g);font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;background:transparent;cursor:pointer;transition:all 0.3s;font-weight:500;}
+.btn-rd:hover{background:var(--g);color:#000;}
+.bk-add{background:var(--s1);border:2px dashed rgba(201,168,76,0.15);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:420px;cursor:pointer;transition:all 0.3s;}
+.bk-add:hover{border-color:rgba(201,168,76,0.4);background:rgba(201,168,76,0.02);}
+.add-ic{width:60px;height:60px;border:1px solid var(--gd);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--g);margin-bottom:1.2rem;transition:all 0.3s;}
+.bk-add:hover .add-ic{background:var(--g);color:#000;}
+.add-lbl{font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mu);}
+
+/* OVERLAYS */
+.ov{position:fixed;inset:0;z-index:600;background:rgba(3,3,5,0.96);backdrop-filter:blur(12px);display:none;overflow-y:auto;}
+.ov.open{display:block;}
+.ov-wrap{max-width:820px;margin:4rem auto;padding:0 1.5rem;}
+.ov-box{background:var(--s1);border:1px solid rgba(201,168,76,0.2);padding:3.5rem;position:relative;}
+.ov-line{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--g),transparent);}
+.mc{position:absolute;top:1.8rem;right:1.8rem;background:none;border:1px solid rgba(201,168,76,0.2);color:var(--mu);width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.3s;font-size:1rem;}
+.mc:hover{border-color:var(--g);color:var(--g);}
+
+/* READER */
+.r-title{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;margin-bottom:0.5rem;}
+.r-auth{font-size:0.68rem;letter-spacing:0.2em;color:var(--g);text-transform:uppercase;display:block;margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid rgba(201,168,76,0.15);}
+.ch-lbl{font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--g);display:block;margin-bottom:0.6rem;}
+.ch-ttl{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;margin-bottom:2rem;}
+.ch-p{font-family:'Cormorant Garamond',serif;font-size:1.15rem;line-height:1.95;color:rgba(242,237,228,0.82);margin-bottom:1.3rem;}
+.blur-wrap{position:relative;margin-top:2.5rem;}
+.blur-txt{font-family:'Cormorant Garamond',serif;font-size:1.15rem;line-height:1.95;color:rgba(242,237,228,0.8);filter:blur(7px);user-select:none;pointer-events:none;}
+.blur-gate{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(19,19,22,0) 0%,rgba(19,19,22,0.65) 35%,rgba(19,19,22,0.97) 65%,var(--s1) 100%);display:flex;align-items:flex-end;justify-content:center;padding-bottom:3rem;}
+.gate{background:var(--s2);border:1px solid rgba(201,168,76,0.25);padding:2.8rem 3rem;max-width:460px;width:100%;text-align:center;position:relative;}
+.gate::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--g),transparent);}
+.gate h3{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:0.6rem;}
+.gate p{font-size:0.82rem;color:var(--mu);line-height:1.7;margin-bottom:1.8rem;}
+.gate-price{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;color:var(--g);line-height:1;}
+.gate-note{font-size:0.62rem;color:var(--mu);margin-top:0.3rem;margin-bottom:2rem;letter-spacing:0.1em;}
+.btn-unlock{width:100%;padding:1.1rem;background:linear-gradient(135deg,var(--g),#9a6f28);color:#000;font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.3s;font-family:'DM Sans',sans-serif;}
+.btn-unlock:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(201,168,76,0.3);}
+
+/* PAYMENT */
+.pay-ov{position:fixed;inset:0;z-index:700;background:rgba(3,3,5,0.98);backdrop-filter:blur(16px);display:none;align-items:center;justify-content:center;}
+.pay-ov.open{display:flex;}
+.pay-box{background:var(--s1);border:1px solid rgba(201,168,76,0.2);padding:3rem;max-width:520px;width:92%;position:relative;max-height:92vh;overflow-y:auto;}
+.pay-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--g),transparent);}
+.pay-h{font-family:'Playfair Display',serif;font-size:1.7rem;margin-bottom:0.3rem;}
+.pay-sub2{font-size:0.75rem;color:var(--mu);margin-bottom:2rem;}
+.pay-strip{background:var(--s2);border-left:2px solid var(--g);padding:1rem 1.2rem;margin-bottom:2rem;display:flex;justify-content:space-between;align-items:center;}
+.pay-bname{font-size:0.9rem;font-weight:600;}
+.pay-bsub{font-size:0.62rem;color:var(--mu);margin-top:0.2rem;}
+.pay-amt{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--g);}
+.psec{font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--g);display:block;margin-bottom:0.9rem;}
+.mth-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:2rem;}
+.mth{border:1px solid rgba(201,168,76,0.15);padding:0.9rem;text-align:center;cursor:pointer;transition:all 0.3s;background:var(--s2);}
+.mth:hover,.mth.on{border-color:var(--g);background:rgba(201,168,76,0.05);}
+.m-ic{font-size:1.4rem;display:block;margin-bottom:0.3rem;}
+.m-nm{font-size:0.72rem;font-weight:600;letter-spacing:0.05em;}
+.m-sb{font-size:0.58rem;color:var(--mu);margin-top:0.12rem;}
+.upi-lst{display:flex;flex-direction:column;gap:0.55rem;margin-bottom:1.5rem;}
+.upi-r{border:1px solid rgba(201,168,76,0.12);padding:0.75rem 1rem;display:flex;align-items:center;gap:0.9rem;cursor:pointer;transition:all 0.2s;background:var(--s2);}
+.upi-r:hover,.upi-r.sl{border-color:var(--g);}
+.uic{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.62rem;font-weight:700;flex-shrink:0;}
+.ugp{background:#fff;color:#1a73e8;border:2px solid #1a73e8;}
+.uph{background:#5f259f;color:#fff;}
+.upt{background:#002970;color:#00b9f1;}
+.ubh{background:#00569c;color:#fff;}
+.unm{font-size:0.82rem;font-weight:600;}
+.uds{font-size:0.62rem;color:var(--mu);}
+.udot{width:16px;height:16px;border-radius:50%;border:1px solid var(--mu);margin-left:auto;flex-shrink:0;transition:all 0.2s;position:relative;}
+.upi-r.sl .udot{background:var(--g);border-color:var(--g);}
+.upi-r.sl .udot::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:0.55rem;color:#000;font-weight:700;}
+.fr{margin-bottom:1.1rem;}
+.fl{font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mu);display:block;margin-bottom:0.4rem;}
+.fi{width:100%;padding:0.75rem 1rem;background:var(--s3);border:1px solid rgba(255,255,255,0.07);color:var(--tx);font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.3s;}
+.fi:focus{border-color:var(--gd);}
+.tcol{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;}
+.sec-n{display:flex;align-items:center;gap:0.5rem;font-size:0.62rem;color:var(--mu2);margin-top:0.8rem;}
+.sec-d{width:5px;height:5px;border-radius:50%;background:#27ae60;flex-shrink:0;}
+.btn-pay{width:100%;padding:1.1rem;background:linear-gradient(135deg,var(--g),#9a6f28);color:#000;font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;border:none;cursor:pointer;margin-top:1.5rem;transition:all 0.3s;font-family:'DM Sans',sans-serif;}
+.btn-pay:hover{transform:translateY(-1px);}
+.btn-pay:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+
+/* ADMIN */
+.adm-ov{position:fixed;inset:0;z-index:800;background:rgba(3,3,5,0.98);backdrop-filter:blur(16px);display:none;align-items:center;justify-content:center;}
+.adm-ov.open{display:flex;}
+.adm-box{background:var(--s1);border:1px solid rgba(201,168,76,0.2);padding:2.8rem;max-width:560px;width:92%;position:relative;max-height:92vh;overflow-y:auto;}
+.adm-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--g),transparent);}
+.adm-h{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:1.5rem;padding-bottom:1.2rem;border-bottom:1px solid rgba(201,168,76,0.15);}
+.adm-card{background:var(--s2);border:1px solid rgba(201,168,76,0.12);padding:1rem 1.2rem;cursor:pointer;transition:all 0.2s;display:flex;justify-content:space-between;align-items:center;margin-bottom:0.7rem;}
+.adm-card:hover{border-color:var(--gd);}
+.act{font-size:0.88rem;font-weight:600;}
+.acs{font-size:0.65rem;color:var(--mu);margin-top:0.2rem;}
+.adm-btns{display:flex;gap:1rem;margin-top:1.8rem;}
+.btn-asv{flex:1;padding:0.85rem;background:linear-gradient(135deg,var(--g),#9a6f28);color:#000;font-weight:700;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.btn-abk{padding:0.85rem 1.5rem;background:transparent;border:1px solid rgba(255,255,255,0.1);color:var(--mu);font-size:0.72rem;cursor:pointer;transition:all 0.3s;letter-spacing:0.1em;text-transform:uppercase;font-family:'DM Sans',sans-serif;}
+.btn-abk:hover{border-color:var(--mu);color:var(--tx);}
+.upz{border:1px dashed rgba(201,168,76,0.25);padding:2rem;text-align:center;cursor:pointer;transition:all 0.3s;background:var(--s2);}
+.upz:hover{border-color:var(--g);}
+.upz p{font-size:0.78rem;color:var(--mu);}
+.upz strong{color:var(--g);}
+.upz input{display:none;}
+.upst{font-size:0.72rem;color:var(--g);margin-top:0.5rem;}
+
+/* SUCCESS */
+.suc-ov{position:fixed;inset:0;z-index:900;background:rgba(3,3,5,0.98);backdrop-filter:blur(16px);display:none;align-items:center;justify-content:center;}
+.suc-ov.open{display:flex;}
+.suc-box{background:var(--s1);border:1px solid rgba(201,168,76,0.25);padding:3.5rem;max-width:440px;width:90%;text-align:center;position:relative;}
+.suc-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--g),transparent);}
+.suc-ring{width:70px;height:70px;border-radius:50%;border:2px solid var(--g);display:flex;align-items:center;justify-content:center;margin:0 auto 2rem;position:relative;}
+.suc-ring::before{content:'';position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(201,168,76,0.2);}
+.suc-chk{font-size:1.8rem;color:var(--g);}
+.suc-h{font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:0.5rem;}
+.suc-g{color:var(--g);font-size:0.9rem;margin-bottom:0.8rem;}
+.suc-p{font-size:0.82rem;color:var(--mu);line-height:1.8;}
+
+/* FOOTER */
+footer{background:var(--ob);padding:4rem 5rem 2rem;border-top:1px solid rgba(201,168,76,0.08);}
+.foot-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;padding-bottom:3rem;border-bottom:1px solid rgba(201,168,76,0.08);margin-bottom:2rem;}
+.foot-desc{font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:var(--mu);line-height:1.8;font-style:italic;margin-top:1rem;}
+.fcol h4{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--g);margin-bottom:1.2rem;}
+.fcol a{display:block;font-size:0.78rem;color:var(--mu);text-decoration:none;margin-bottom:0.6rem;transition:color 0.3s;}
+.fcol a:hover{color:var(--g);}
+.foot-bot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.fcopy{font-size:0.68rem;color:var(--mu2);}
+.ftag{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.85rem;color:var(--mu2);}
+
+@media(max-width:900px){
+  nav{padding:1.2rem 2rem;}
+  .nav-links{display:none;}
+  .hero{padding:0 2rem;}
+  .hero-stats{display:none;}
+  #about{padding:5rem 2rem;}
+  .about-grid{grid-template-columns:1fr;gap:3rem;}
+  #gallery{padding:4rem 2rem;}
+  .mosaic{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
+  .gal-item:nth-child(1){grid-row:span 1;}
+  .gal-item:nth-child(4){grid-column:span 1;}
+  #books{padding:4rem 2rem;}
+  .books-hrow{flex-direction:column;align-items:flex-start;}
+  footer{padding:3rem 2rem 1.5rem;}
+  .foot-top{grid-template-columns:1fr 1fr;gap:2rem;}
+  .ov-wrap{margin:2rem auto;padding:0 1rem;}
+  .ov-box{padding:2rem 1.5rem;}
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="logo" href="#home">INSPIREX</a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#gallery">Explore</a>
+    <a href="#books">Library</a>
+    <button class="nav-admin" onclick="openAdmin(event)">Admin Panel</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Discipline · Dark Psychology · Youth Power</div>
+    <h1 class="hero-title">
+      <span class="ht1">Rewrite</span>
+      <span class="ht2">Your Mind</span>
+      <span class="ht3">Become Unstoppable</span>
+    </h1>
+    <p class="hero-sub">The premium knowledge platform for the youth who refuse to be average — built on dark psychology, iron discipline, and the science of becoming.</p>
+    <div class="hero-actions">
+      <a href="#about" class="btn-gold">Explore INSPIREX</a>
+      <a href="#books" class="btn-outline">Browse Library</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">4K+</div><div class="stat-label">Readers</div></div>
+    <div class="stat"><div class="stat-num">12+</div><div class="stat-label">Books</div></div>
+    <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Impact</div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-left">
+      <div class="about-eyebrow">What is INSPIREX</div>
+      <h2 class="about-title">We Don't Sell<br>Motivation.<br>We Build <em>Warriors.</em></h2>
+      <p class="about-body">INSPIREX was born from one belief — that today's youth is capable of far more than what society tells them. We are a premium knowledge platform delivering the darkest, most powerful truths about the human mind, discipline, and psychological mastery.</p>
+      <p class="about-body">We don't give you feel-good quotes. We give you frameworks that rewire your identity. Built for the young, hungry, and ready to become unstoppable.</p>
+      <div class="pillars">
+        <div class="pillar"><div class="p-icon">⚔</div><div class="p-text"><h4>Iron Discipline</h4><p>Build consistency through identity-level transformation that makes showing up non-negotiable.</p></div></div>
+        <div class="pillar"><div class="p-icon">🧠</div><div class="p-text"><h4>Dark Psychology Mastery</h4><p>Understand the hidden rules of influence and power before the world uses them against you.</p></div></div>
+        <div class="pillar"><div class="p-icon">🔥</div><div class="p-text"><h4>Youth Empowerment</h4><p>Designed for young minds who are hungry, ambitious, and ready to break every limit they were told to accept.</p></div></div>
+      </div>
+    </div>
+    <div class="about-visuals">
+      <div class="vis-card" style="height:300px;">
+        <svg width="100%" height="300" viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg" style="background:linear-gradient(145deg,#0a0500,#130b00);">
+          <defs><radialGradient id="vg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#C9A84C" stop-opacity="0.18"/><stop offset="100%" stop-color="#C9A84C" stop-opacity="0"/></radialGradient></defs>
+          <rect width="500" height="300" fill="url(#vg1)"/>
+          <circle cx="250" cy="150" r="90" fill="none" stroke="#C9A84C" stroke-width="0.6" stroke-opacity="0.3"/>
+          <circle cx="250" cy="150" r="65" fill="none" stroke="#C9A84C" stroke-width="0.5" stroke-opacity="0.2"/>
+          <circle cx="250" cy="150" r="40" fill="none" stroke="#C9A84C" stroke-width="0.4" stroke-opacity="0.15"/>
+          <circle cx="250" cy="150" r="5" fill="#C9A84C" fill-opacity="0.7"/>
+          <line x1="250" y1="60" x2="250" y2="240" stroke="#C9A84C" stroke-width="0.5" stroke-opacity="0.15"/>
+          <line x1="160" y1="150" x2="340" y2="150" stroke="#C9A84C" stroke-width="0.5" stroke-opacity="0.15"/>
+          <line x1="186" y1="86" x2="314" y2="214" stroke="#C9A84C" stroke-width="0.4" stroke-opacity="0.1"/>
+          <line x1="314" y1="86" x2="186" y2="214" stroke="#C9A84C" stroke-width="0.4" stroke-opacity="0.1"/>
+          <circle cx="250" cy="60" r="3" fill="#C9A84C" fill-opacity="0.55"/>
+          <circle cx="250" cy="240" r="3" fill="#C9A84C" fill-opacity="0.55"/>
+          <circle cx="160" cy="150" r="3" fill="#C9A84C" fill-opacity="0.55"/>
+          <circle cx="340" cy="150" r="3" fill="#C9A84C" fill-opacity="0.55"/>
+          <text x="250" y="278" text-anchor="middle" fill="#C9A84C" fill-opacity="0.4" font-size="10" font-family="'Playfair Display',serif" letter-spacing="8">MASTER YOUR MIND</text>
+        </svg>
+        <div class="vis-cap"><h4>The Architecture of Mind</h4><p>Psychology · Neural Rewiring</p></div>
+      </div>
+      <div class="vis-row">
+        <div class="vis-card" style="height:200px;">
+          <svg width="100%" height="200" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" style="background:linear-gradient(145deg,#050010,#0a001a);">
+            <defs><radialGradient id="vg2" cx="50%" cy="45%" r="55%"><stop offset="0%" stop-color="#8B2BE2" stop-opacity="0.2"/><stop offset="100%" stop-color="#8B2BE2" stop-opacity="0"/></radialGradient></defs>
+            <rect width="240" height="200" fill="url(#vg2)"/>
+            <ellipse cx="120" cy="90" rx="55" ry="28" fill="none" stroke="#C9A84C" stroke-width="0.7" stroke-opacity="0.45"/>
+            <circle cx="120" cy="90" r="18" fill="none" stroke="#C9A84C" stroke-width="0.6" stroke-opacity="0.5"/>
+            <circle cx="120" cy="90" r="7" fill="#C9A84C" fill-opacity="0.4"/>
+            <circle cx="120" cy="90" r="2.5" fill="#C9A84C" fill-opacity="0.8"/>
+            <text x="120" y="175" text-anchor="middle" fill="#C9A84C" fill-opacity="0.4" font-size="8" font-family="serif" letter-spacing="5">AWARENESS</text>
+          </svg>
+          <div class="vis-cap"><h4>Perceive Everything</h4><p>Focus · Clarity</p></div>
+        </div>
+        <div class="vis-card" style="height:200px;">
+          <svg width="100%" height="200" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" style="background:linear-gradient(145deg,#000a08,#001510);">
+            <defs><radialGradient id="vg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00C9A8" stop-opacity="0.12"/><stop offset="100%" stop-color="#00C9A8" stop-opacity="0"/></radialGradient></defs>
+            <rect width="240" height="200" fill="url(#vg3)"/>
+            <path d="M120 170 C80 158 55 132 68 100 C76 82 72 63 80 50 C85 72 93 77 97 67 C102 48 92 30 120 15 C148 30 138 48 143 67 C147 77 155 72 160 50 C168 63 164 82 172 100 C185 132 160 158 120 170Z" fill="none" stroke="#C9A84C" stroke-width="0.7" stroke-opacity="0.35"/>
+            <circle cx="120" cy="110" r="8" fill="#C9A84C" fill-opacity="0.12"/>
+            <circle cx="120" cy="110" r="3" fill="#C9A84C" fill-opacity="0.55"/>
+            <text x="120" y="185" text-anchor="middle" fill="#C9A84C" fill-opacity="0.4" font-size="8" font-family="serif" letter-spacing="5">DISCIPLINE</text>
+          </svg>
+          <div class="vis-cap"><h4>Inner Fire</h4><p>Drive · Consistency</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gal-header">
+    <span class="sec-tag">Visual Universe</span>
+    <h2 class="sec-title">The INSPIREX World</h2>
+    <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--mu);font-style:italic;margin-top:0.8rem;">Six pillars. One mission. Transform the youth of this generation.</p>
+  </div>
+  <div class="mosaic">
+    <div class="gal-item"><div class="ga" style="height:100%;"><svg width="100%" height="100%" viewBox="0 0 300 570" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" style="background:linear-gradient(145deg,#050010,#0f001f,#05000a);">
+      <defs><radialGradient id="gg1" cx="50%" cy="30%" r="60%"><stop offset="0%" stop-color="#8B2BE2" stop-opacity="0.25"/><stop offset="100%" stop-color="#8B2BE2" stop-opacity="0"/></radialGradient></defs>
+      <rect width="300" height="570" fill="url(#gg1)"/>
+      <path d="M150 490 L150 210 M140 230 L150 210 L160 230 M130 290 L150 270 L170 290 M150 270 L150 350 M135 350 L150 350 L165 350 M135 350 L125 430 M165 350 L175 430" fill="none" stroke="#C9A84C" stroke-width="1" stroke-opacity="0.5"/>
+      <line x1="150" y1="210" x2="50" y2="90" stroke="#C9A84C" stroke-width="0.4" stroke-opacity="0.2"/><line x1="150" y1="210" x2="250" y2="90" stroke="#C9A84C" stroke-width="0.4" stroke-opacity="0.2"/><line x1="150" y1="210" x2="30" y2="190" stroke="#C9A84C" stroke-width="0.4" stroke-opacity="0.15"/><line x1="150" y1="210" x2="270" y2="190" stroke="#C9A84C" stroke-width="0.4" stroke-opacity="0.15"/>
+      <path d="M120 195 L130 170 L150 185 L170 170 L180 195 Z" fill="none" stroke="#C9A84C" stroke-width="0.7" stroke-opacity="0.5"/>
+      <circle cx="150" cy="210" r="12" fill="none" stroke="#C9A84C" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="150" cy="210" r="4" fill="#C9A84C" fill-opacity="0.6"/>
+      <text x="150" y="540" text-anchor="middle" fill="#C9A84C" fill-opacity="0.5" font-size="10" font-family="'Bebas Neue',serif" letter-spacing="8">RISE ABOVE ALL</text>
+    </svg></div><div class="gi"><h3>Rise Above All</h3><p>Self Mastery · Youth Power</p></div></div>
+
+    <div class="gal-item"><div class="ga" style="height:100%;"><svg width="100%" height="100%" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" style="background:linear-gradient(145deg,#0d0000,#1a0500);">
+      <defs><radialGradient id="gg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#8B1A1A" stop-opacity="0.3"/><stop offset="100%" stop-color="#8B1A1A" stop-opacity="0"/></radialGradient></defs>
+      <rect width="300" height="280" fill="url(#gg2)"/>
+      <path d="M60 140 Q80 120 100 140 Q120 160 140 140 Q160 120 180 140 Q200 160 220 140 Q240 120 260 140" fill="none" stroke="#C9A84C" stroke-width="1.2" stroke-opacity="0.45"/>
+      <circle cx="100" cy="140" r="8" fill="none" stroke="#C9A84C" stroke-width="0.8" stroke-opacity="0.4"/>
+      <circle cx="180" cy="140" r="8" fill="none" stroke="#C9A84C" stroke-width="0.8" stroke-opacity="0.4"/>
+      <line x1="135" y1="125" x2="145" y2="155" stroke="#C9A84C" stroke-width="1.5" stroke-opacity="0.6"/>
+      <circle cx="140" cy="140" r="3" fill="#C9A84C" fill-opacity="0.8"/>
+      <text x="150" y="240" text-anchor="middle" fill="#C9A84C" fill-opacity="0.4" font-size="9" font-family="serif" letter-spacing="6">BREAK FREE</text>
+    </svg></div><div class="gi"><h3>Break Every Chain</h3><p>Liberation · Mindset</p></div></div>
+
+    <div class="gal-item"><div class="ga" style="height:100%;"><svg width="100%" height="100%" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" style="background:linear-gradient(145deg,#000a08,#001a14);">
+      <defs><radialGradient id="gg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00C9A8" stop-opacity="0.15"/><stop offset="100%" stop-color="#00C9A8" stop-opacity="0"/></radialGradient></defs>
+      <rect width="300" height="280" fill="url(#gg3)"/>
+      <path d="M150 140 Q150 90 190 90 Q230 90 230 140 Q230 200 150 200 Q70 200 70 120 Q70 50 160 50 Q240 50 250 130" fill="none" stroke="#C9A84C" stroke-width="0.8" stroke-opacity="0.4"/>
+      <circle cx="150" cy="140" r="3" fill="#C9A84C" fill-opacity="0.7"/>
+      <text x="150" y="250" text-anchor="middle" fill="#C9A84C" fill-opacity="0.4" font-size="9" font-family="serif" letter-spacing="6">COMPOUND GROWTH</text>
+    </svg></div><div class="gi"><h3>Compound Growth</h3><p>Progress · Consistency</p></div></div>
+
+    <div class="gal-item"><div class="ga" style="height:100%;"><svg width="100%" height="100%" viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" style="background:linear-gradient(145deg,#080005,#130010);">
+      <defs><radialGradient id="gg4" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#C9A84C" stop-opacity="0.07"/><stop offset="100%" stop-color="#C9A84C" stop-opacity="0"/></radialGradient></defs>
+      <rect width="600" height="280" fill="url(#gg4)"/>
+      <rect x="60" y="80" width="80" height="120" rx="40" fill="none" stroke="#C9A84C" stroke-width="0.7" stroke-opacity="0.35"/>
+      <text x="100" y="248" text-anchor="middle" fill="#C9A84C" fill-opacity="0.35" font-size="8" font-family="serif" letter-spacing="2">TRUTH</text>
+      <line x1="300" y1="80" x2="300" y2="200" stroke="#C9A84C" stroke-width="0.7" stroke-opacity="0.35"/>
+      <line x1="250" y1="110" x2="350" y2="110" stroke="#C9A84C" stroke-width="0.7" stroke-opacity="0.35"/>
+      <circle cx="245" cy="115" r="20" fill="none" stroke="#C9A84C" stroke-width="0.6" stroke-opacity="0.3"/>
+      <circle cx="355" cy="115" r="20" fill="none" stroke="#C9A84C" stroke-width="0.6" stroke-opacity="0.3"/>
+      <text x="300" y="248" text-anchor="middle" fill="#C9A84C" fill-opacity="0.35" font-size="8" font-family="serif" letter-spacing="2">BALANCE</text>
+      <circle cx="500" cy="115" r="28" fill="none" stroke="#C9A84C" stroke-width="0.7" stroke-opacity="0.35"/>
+      <circle cx="500" cy="115" r="14" fill="none" stroke="#C9A84C" stroke-width="0.5" stroke-opacity="0.2"/>
+      <line x1="522" y1="130" x2="545" y2="150" stroke="#C9A84C" stroke-width="0.8" stroke-opacity="0.4"/>
+      <text x="500" y="248" text-anchor="middle" fill="#C9A84C" fill-opacity="0.35" font-size="8" font-family="serif" letter-spacing="2">MASTERY</text>
+      <text x="300" y="38" text-anchor="middle" fill="#C9A84C" fill-opacity="0.45" font-size="13" font-family="'Playfair Display',serif" letter-spacing="8">THREE PILLARS OF POWER</text>
+    </svg></div><div class="gi"><h3>The Three Pillars of Power</h3><p>Truth · Balance · Mastery</p></div></div>
+
+    <div class="gal-item"><div class="ga" style="height:100%;"><svg width="100%" height="100%" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" style="background:linear-gradient(145deg,#0a0500,#1a0e00);">
+      <defs><radialGradient id="gg5" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF6B00" stop-opacity="0.15"/><stop offset="100%" stop-color="#FF6B00" stop-opacity="0"/></radialGradient></defs>
+      <rect width="300" height="280" fill="url(#gg5)"/>
+      <path d="M30 230 L150 50 L270 230 Z" fill="none" stroke="#C9A84C" stroke-width="0.8" stroke-opacity="0.35"/>
+      <path d="M80 230 L150 100 L220 230 Z" fill="none" stroke="#C9A84C" stroke-width="0.5" stroke-opacity="0.2"/>
+      <circle cx="150" cy="50" r="5" fill="#C9A84C" fill-opacity="0.6"/>
+      <line x1="150" y1="50" x2="150" y2="20" stroke="#C9A84C" stroke-width="0.8" stroke-opacity="0.4"/>
+      <circle cx="90" cy="90" r="1.5" fill="#C9A84C" fill-opacity="0.4"/>
+      <circle cx="210" cy="70" r="1.5" fill="#C9A84C" fill-opacity="0.4"/>
+      <text x="150" y="255" text-anchor="middle" fill="#C9A84C" fill-opacity="0.4" font-size="8" font-family="serif" letter-spacing="5">AMBITION</text>
+    </svg></div><div class="gi"><h3>Climb Without Stopping</h3><p>Ambition · Goals · Youth</p></div></div>
+  </div>
+</section>
+
+<!-- BOOKS -->
+<section id="books">
+  <div class="books-hrow">
+    <div>
+      <span class="sec-tag">The Library</span>
+      <h2 class="sec-title" style="margin-top:0.5rem;">Premium Book Collection</h2>
+    </div>
+    <div class="adm-strip">
+      <span class="adm-badge">ADMIN</span>
+      <span style="font-size:0.72rem;color:var(--mu);">Use Admin Panel to manage books</span>
+    </div>
+  </div>
+  <div class="bks-grid" id="booksGrid"></div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-top">
+    <div>
+      <span class="logo" style="font-size:1.6rem;">INSPIREX</span>
+      <p class="foot-desc">The premium knowledge platform built to transform the youth of this generation through dark psychology, iron discipline, and the science of becoming unstoppable.</p>
+    </div>
+    <div class="fcol"><h4>Platform</h4><a href="#about">About INSPIREX</a><a href="#gallery">Explore</a><a href="#books">Library</a></div>
+    <div class="fcol"><h4>Support</h4><a href="#">Contact Us</a><a href="#">Refund Policy</a><a href="#">FAQ</a></div>
+    <div class="fcol"><h4>Legal</h4><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Cookies</a></div>
+  </div>
+  <div class="foot-bot">
+    <div class="fcopy">© 2025 INSPIREX. All rights reserved.</div>
+    <div class="ftag">"The mind is a weapon. Sharpen it."</div>
+  </div>
+</footer>
+
+<!-- READER OVERLAY -->
+<div class="ov" id="readerOv">
+  <div class="ov-wrap">
+    <div class="ov-box">
+      <div class="ov-line"></div>
+      <button class="mc" onclick="closeReader()">✕</button>
+      <h1 class="r-title" id="rTitle"></h1>
+      <span class="r-auth" id="rAuth"></span>
+      <span class="ch-lbl">Chapter I — Free Preview</span>
+      <h2 class="ch-ttl" id="rChap"></h2>
+      <div id="rFree"></div>
+      <div class="blur-wrap">
+        <div class="blur-txt" id="rBlur"></div>
+        <div class="blur-gate">
+          <div class="gate">
+            <h3>Unlock Full Book</h3>
+            <p>You've had a taste of what's inside. The full knowledge awaits those bold enough to claim it.</p>
+            <div class="gate-price" id="gPrice">₹299</div>
+            <div class="gate-note">One-time payment · Lifetime access · PDF sent to your email</div>
+            <button class="btn-unlock" onclick="openPay()">Unlock Now — Pay Securely →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAYMENT OVERLAY -->
+<div class="pay-ov" id="payOv">
+  <div class="pay-box">
+    <button class="mc" style="position:absolute;top:1.5rem;right:1.5rem;" onclick="closePay()">✕</button>
+    <h2 class="pay-h">Complete Purchase</h2>
+    <div class="pay-sub2">Secure · Encrypted · Instant PDF Delivery to Gmail</div>
+    <div class="pay-strip">
+      <div><div class="pay-bname" id="pName">Book</div><div class="pay-bsub">INSPIREX Premium · Lifetime Access</div></div>
+      <div class="pay-amt" id="pAmt">₹299</div>
+    </div>
+    <span class="psec">Payment Method</span>
+    <div class="mth-grid">
+      <div class="mth on" onclick="setMth(this,'upi')"><span class="m-ic">📲</span><div class="m-nm">UPI</div><div class="m-sb">Instant</div></div>
+      <div class="mth" onclick="setMth(this,'netbanking')"><span class="m-ic">🏦</span><div class="m-nm">Net Banking</div><div class="m-sb">All Banks</div></div>
+      <div class="mth" onclick="setMth(this,'card')"><span class="m-ic">💳</span><div class="m-nm">Card</div><div class="m-sb">Debit/Credit</div></div>
+      <div class="mth" onclick="setMth(this,'wallet')"><span class="m-ic">👝</span><div class="m-nm">Wallet</div><div class="m-sb">Paytm & more</div></div>
+    </div>
+    <div id="mthFields">
+      <span class="psec">Choose UPI App</span>
+      <div class="upi-lst">
+        <div class="upi-r sl" onclick="pickU(this)"><div class="uic ugp">G</div><div><div class="unm">Google Pay</div><div class="uds">GPay UPI</div></div><div class="udot"></div></div>
+        <div class="upi-r" onclick="pickU(this)"><div class="uic uph">Pe</div><div><div class="unm">PhonePe</div><div class="uds">PhonePe UPI</div></div><div class="udot"></div></div>
+        <div class="upi-r" onclick="pickU(this)"><div class="uic upt">Pt</div><div><div class="unm">Paytm</div><div class="uds">Paytm UPI</div></div><div class="udot"></div></div>
+        <div class="upi-r" onclick="pickU(this)"><div class="uic ubh">B</div><div><div class="unm">BHIM UPI</div><div class="uds">Any BHIM app</div></div><div class="udot"></div></div>
+      </div>
+      <div class="fr"><label class="fl">Enter UPI ID</label><input type="text" class="fi" id="upiId" placeholder="yourname@upi"></div>
+    </div>
+    <div class="fr"><label class="fl">Your Full Name</label><input type="text" class="fi" id="bName" placeholder="Full Name"></div>
+    <div class="fr"><label class="fl">Email — PDF will be sent here</label><input type="email" class="fi" id="bEmail" placeholder="you@gmail.com"></div>
+    <div class="sec-n"><div class="sec-d"></div>256-bit SSL · RBI Compliant · PDF auto-delivered to your inbox</div>
+    <button class="btn-pay" id="payBtn" onclick="doPay()">Pay Securely & Unlock →</button>
+    <p style="font-size:0.6rem;color:var(--mu2);margin-top:1.2rem;line-height:1.7;text-align:center;">⚙ To go live: replace RAZORPAY_KEY in script with your Razorpay Key ID.<br>For PDF email: configure EmailJS credentials in the CONFIG section.</p>
+  </div>
+</div>
+
+<!-- ADMIN OVERLAY -->
+<div class="adm-ov" id="admOv">
+  <div class="adm-box">
+    <button class="mc" style="position:absolute;top:1.5rem;right:1.5rem;" onclick="closeAdm()">✕</button>
+    <h2 class="adm-h">✦ Admin Panel — INSPIREX</h2>
+    <div id="admCont"></div>
+    <div class="adm-btns" id="admBtns" style="display:none;">
+      <button class="btn-asv" onclick="saveEdits()">Save Changes</button>
+      <button class="btn-abk" onclick="showSel()">← All Books</button>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS OVERLAY -->
+<div class="suc-ov" id="sucOv">
+  <div class="suc-box">
+    <div class="suc-ring"><div class="suc-chk">✓</div></div>
+    <h2 class="suc-h">Payment Successful!</h2>
+    <p class="suc-g">Your book is unlocked. PDF sent to your email.</p>
+    <p class="suc-p">Welcome to INSPIREX. The knowledge that will reshape you has been delivered. Check your inbox — your journey begins now.</p>
+    <button class="btn-gold" style="margin-top:2.5rem;border:none;cursor:pointer;display:inline-block;" onclick="closeSuc()">Begin Reading →</button>
+  </div>
+</div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────
+const RAZORPAY_KEY   = 'YOUR_RAZORPAY_KEY_ID';
+const EMAILJS_SVC    = 'YOUR_EMAILJS_SERVICE_ID';
+const EMAILJS_TPL    = 'YOUR_EMAILJS_TEMPLATE_ID';
+const EMAILJS_PUB    = 'YOUR_EMAILJS_PUBLIC_KEY';
+const ADMIN_EMAIL    = 'your@email.com';
+// ────────────────────────────────────────────────────────────
+
+let books = [{
+  id:0,title:'Shadow Code',author:'INSPIREX Editorial',
+  tags:['Dark Psychology','Mind Control','Power'],
+  desc:'The hidden rulebook of the human mind — how the darkest psychological principles govern every decision, every relationship, and every outcome in your life.',
+  price:'₹299',priceNum:299,
+  chapter:'The Code No One Taught You',
+  freeText:`You were born into a world running on invisible code. Every conversation you have, every room you enter, every relationship you hold — all of it is governed by psychological laws that nobody ever explained to you.\n\nThey called it social norms. They called it personality. They called it "just the way things are."\n\nThey lied.\n\nWhat governs human interaction is not kindness. It is not fairness. It is not merit. It is the Shadow Code — a set of psychological principles that the powerful have always understood and the powerless have always been kept away from.\n\nINSPIREX presents this book not to make you dangerous, but to make you undeniable. To hand you the code that has always existed, always operated, and always determined who wins — and finally let you read it.`,
+  blurText:`Chapter II: The Architecture of Influence\n\nEvery person you meet is running a mental program. It was written in childhood, reinforced by experience, and almost entirely invisible to them. Your first job — before you say a word — is to read that program.\n\nThe Shadow Code teaches you the MIRROR framework: how to identify the dominant psychological need of any person within the first 90 seconds of interaction. Is it validation? Is it significance? Is it safety? Is it control?\n\nOnce you can read the need, you understand the person. Once you understand the person, you hold the power.\n\nChapter III continues with the Six Pillars of Social Dominance — the psychological traits that make certain individuals magnetically influential in any group. These are not traits you are born with. They are skills. And INSPIREX will give you each one.`,
+  pdfName:'shadow-code-inspirex.pdf',pdfFile:null
+}];
+
+let curBk=null,editId=null;
+
+// cursor
+const cur=document.getElementById('cursor'),curR=document.getElementById('cursor-ring');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';setTimeout(()=>{curR.style.left=e.clientX+'px';curR.style.top=e.clientY+'px';},80);});
+document.querySelectorAll('button,a,.bk,.gal-item,.mth,.upi-r,.adm-card,.bk-add').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';curR.style.width='50px';curR.style.height='50px';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';curR.style.width='36px';curR.style.height='36px';});
+});
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60));
+
+function renderBooks(){
+  document.getElementById('booksGrid').innerHTML=books.map(b=>`
+  <div class="bk">
+    <div class="bk-cov">
+      <div class="bk-bg"></div>
+      <div class="bk-lines"></div>
+      <div class="bk-emb"><svg width="160" height="160" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg"><circle cx="80" cy="80" r="70" fill="none" stroke="#C9A84C" stroke-width="0.8"/><circle cx="80" cy="80" r="50" fill="none" stroke="#C9A84C" stroke-width="0.5"/><circle cx="80" cy="80" r="30" fill="none" stroke="#C9A84C" stroke-width="0.4"/><line x1="80" y1="10" x2="80" y2="150" stroke="#C9A84C" stroke-width="0.4"/><line x1="10" y1="80" x2="150" y2="80" stroke="#C9A84C" stroke-width="0.4"/><line x1="30" y1="30" x2="130" y2="130" stroke="#C9A84C" stroke-width="0.3"/><line x1="130" y1="30" x2="30" y2="130" stroke="#C9A84C" stroke-width="0.3"/></svg></div>
+      <div class="bk-info"><h3>${b.title}</h3><div class="bk-auth">INSPIREX · ${b.author}</div></div>
+    </div>
+    <div class="bk-body">
+      <div class="tags">${b.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      <p class="bk-desc">${b.desc}</p>
+      <div class="bk-foot">
+        <div class="bk-price">${b.price}<small>One-time · Lifetime · PDF</small></div>
+        <button class="btn-rd" onclick="openReader(${b.id})">Read Preview →</button>
+      </div>
+    </div>
+  </div>`).join('')+`<div class="bk-add" onclick="openAdmin(null)"><div class="add-ic">+</div><div class="add-lbl">Add New Book</div></div>`;
+}
+
+function openReader(id){const b=books[id];curBk=id;document.getElementById('rTitle').textContent=b.title;document.getElementById('rAuth').textContent='INSPIREX · '+b.author;document.getElementById('rChap').textContent=b.chapter;document.getElementById('rFree').innerHTML=b.freeText.trim().split('\n\n').map(p=>`<p class="ch-p">${p}</p>`).join('');document.getElementById('rBlur').innerHTML=b.blurText.trim().split('\n\n').map(p=>`<p class="ch-p">${p}</p>`).join('');document.getElementById('gPrice').textContent=b.price;document.getElementById('readerOv').classList.add('open');document.body.style.overflow='hidden';}
+function closeReader(){document.getElementById('readerOv').classList.remove('open');document.body.style.overflow='';}
+document.getElementById('readerOv').addEventListener('click',function(e){if(e.target===this)closeReader();});
+
+function openPay(){if(curBk===null)return;const b=books[curBk];document.getElementById('pName').textContent=b.title;document.getElementById('pAmt').textContent=b.price;document.getElementById('payOv').classList.add('open');}
+function closePay(){document.getElementById('payOv').classList.remove('open');}
+document.getElementById('payOv').addEventListener('click',function(e){if(e.target===this)closePay();});
+
+function setMth(el,m){document.querySelectorAll('.mth').forEach(x=>x.classList.remove('on'));el.classList.add('on');const f=document.getElementById('mthFields');
+if(m==='upi'){f.innerHTML=`<span class="psec">Choose UPI App</span><div class="upi-lst"><div class="upi-r sl" onclick="pickU(this)"><div class="uic ugp">G</div><div><div class="unm">Google Pay</div><div class="uds">GPay UPI</div></div><div class="udot"></div></div><div class="upi-r" onclick="pickU(this)"><div class="uic uph">Pe</div><div><div class="unm">PhonePe</div><div class="uds">PhonePe UPI</div></div><div class="udot"></div></div><div class="upi-r" onclick="pickU(this)"><div class="uic upt">Pt</div><div><div class="unm">Paytm</div><div class="uds">Paytm UPI</div></div><div class="udot"></div></div><div class="upi-r" onclick="pickU(this)"><div class="uic ubh">B</div><div><div class="unm">BHIM UPI</div><div class="uds">Any BHIM app</div></div><div class="udot"></div></div></div><div class="fr"><label class="fl">Enter UPI ID</label><input type="text" class="fi" id="upiId" placeholder="yourname@upi"></div>`;}
+else if(m==='netbanking'){f.innerHTML=`<span class="psec">Select Your Bank</span><div class="upi-lst">${['SBI','HDFC Bank','ICICI Bank','Axis Bank','Kotak Bank','PNB'].map(bk=>`<div class="upi-r" onclick="pickU(this)"><div class="uic" style="background:var(--s3);color:var(--g);border:1px solid var(--gd);font-size:0.5rem;">${bk.slice(0,3)}</div><div><div class="unm">${bk}</div><div class="uds">Net Banking</div></div><div class="udot"></div></div>`).join('')}</div>`;}
+else if(m==='card'){f.innerHTML=`<span class="psec">Card Details</span><div class="fr"><label class="fl">Card Number</label><input type="text" class="fi" placeholder="XXXX XXXX XXXX XXXX" maxlength="19"></div><div class="tcol"><div class="fr"><label class="fl">Expiry</label><input type="text" class="fi" placeholder="MM/YY"></div><div class="fr"><label class="fl">CVV</label><input type="password" class="fi" placeholder="•••" maxlength="4"></div></div><div class="fr"><label class="fl">Name on Card</label><input type="text" class="fi" placeholder="Full Name"></div>`;}
+else if(m==='wallet'){f.innerHTML=`<span class="psec">Select Wallet</span><div class="upi-lst"><div class="upi-r sl" onclick="pickU(this)"><div class="uic upt">Pt</div><div><div class="unm">Paytm Wallet</div><div class="uds">Paytm balance</div></div><div class="udot"></div></div><div class="upi-r" onclick="pickU(this)"><div class="uic" style="background:#ff4500;color:#fff;width:34px;height:34px;font-size:0.5rem;">Mob</div><div><div class="unm">MobiKwik</div><div class="uds">MobiKwik wallet</div></div><div class="udot"></div></div></div><div class="fr"><label class="fl">Registered Mobile</label><input type="tel" class="fi" placeholder="+91 XXXXX XXXXX"></div>`;}}
+function pickU(el){el.closest('.upi-lst').querySelectorAll('.upi-r').forEach(x=>x.classList.remove('sl'));el.classList.add('sl');}
+
+function doPay(){
+  const name=document.getElementById('bName').value.trim();
+  const email=document.getElementById('bEmail').value.trim();
+  if(!name||!email){alert('Please enter your name and email.');return;}
+  if(!/\S+@\S+\.\S+/.test(email)){alert('Please enter a valid email address.');return;}
+  const btn=document.getElementById('payBtn');btn.textContent='Connecting...';btn.disabled=true;
+  // ── RAZORPAY LIVE (uncomment + add key) ──
+  // const b=books[curBk];const rzp=new Razorpay({key:RAZORPAY_KEY,amount:b.priceNum*100,currency:'INR',name:'INSPIREX',description:b.title,handler:function(r){sendEmail(name,email,b);btn.textContent='Pay Securely & Unlock →';btn.disabled=false;closePay();closeReader();document.getElementById('sucOv').classList.add('open');},prefill:{name,email},theme:{color:'#C9A84C'}});rzp.open();btn.textContent='Pay Securely & Unlock →';btn.disabled=false;return;
+  // ── DEMO MODE ──
+  setTimeout(()=>{sendEmail(name,email,books[curBk]);btn.textContent='Pay Securely & Unlock →';btn.disabled=false;closePay();closeReader();document.getElementById('sucOv').classList.add('open');},2000);
+}
+
+function sendEmail(name,email,book){
+  // emailjs.init(EMAILJS_PUB);emailjs.send(EMAILJS_SVC,EMAILJS_TPL,{to_name:name,to_email:email,book_title:book.title,admin_email:ADMIN_EMAIL});
+  console.log('[INSPIREX] PDF dispatch →',name,email,book.title);
+}
+
+function openAdmin(e){if(e)e.preventDefault();showSel();document.getElementById('admOv').classList.add('open');}
+function closeAdm(){document.getElementById('admOv').classList.remove('open');editId=null;}
+document.getElementById('admOv').addEventListener('click',function(e){if(e.target===this)closeAdm();});
+
+function showSel(){editId=null;document.getElementById('admBtns').style.display='none';document.getElementById('admCont').innerHTML=`<p style="font-size:0.78rem;color:var(--mu);margin-bottom:1.5rem;line-height:1.7;">Select a book to edit, or add a new one.</p>${books.map(b=>`<div class="adm-card" onclick="loadEdit(${b.id})"><div><div class="act">${b.title}</div><div class="acs">${b.author} · ${b.price}</div></div><span style="color:var(--g);font-size:0.72rem;">Edit →</span></div>`).join('')}<div style="margin-top:1.5rem;border-top:1px solid rgba(201,168,76,0.1);padding-top:1.5rem;"><button class="btn-asv" onclick="showAdd()" style="width:100%;flex:none;">+ Add New Book</button></div>`;}
+
+function loadEdit(id){editId=id;const b=books[id];document.getElementById('admBtns').style.display='flex';document.getElementById('admCont').innerHTML=`<p style="font-size:0.62rem;color:var(--g);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1.2rem;">Editing: ${b.title}</p><div class="fr"><label class="fl">Book Title</label><input class="fi" id="e_t" value="${b.title}"></div><div class="fr"><label class="fl">Author</label><input class="fi" id="e_a" value="${b.author}"></div><div class="fr"><label class="fl">Price (₹)</label><input class="fi" id="e_p" value="${b.price}"></div><div class="fr"><label class="fl">Tags (comma separated)</label><input class="fi" id="e_tg" value="${b.tags.join(', ')}"></div><div class="fr"><label class="fl">Short Description</label><input class="fi" id="e_d" value="${b.desc}"></div><div class="fr"><label class="fl">Free Preview Chapter Title</label><input class="fi" id="e_ch" value="${b.chapter}"></div><div class="fr"><label class="fl">Free Preview Text</label><textarea class="fi" id="e_ft" rows="5" style="resize:vertical;">${b.freeText}</textarea></div><div class="fr"><label class="fl">Locked / Blurred Text</label><textarea class="fi" id="e_bt" rows="5" style="resize:vertical;">${b.blurText}</textarea></div><div class="fr"><label class="fl">Upload PDF</label><label class="upz" for="pdf_${id}"><input type="file" id="pdf_${id}" accept=".pdf" onchange="handlePDF(this,${id})"><p>Drop PDF here or <strong>click to browse</strong></p><div class="upst" id="pst_${id}">${b.pdfName||'No PDF yet'}</div></label></div>`;}
+
+function handlePDF(inp,id){if(inp.files[0]){books[id].pdfName=inp.files[0].name;books[id].pdfFile=inp.files[0];document.getElementById('pst_'+id).textContent='✓ '+inp.files[0].name;}}
+
+let newPDF=null;
+function showAdd(){editId='new';document.getElementById('admBtns').style.display='flex';document.getElementById('admCont').innerHTML=`<p style="font-size:0.62rem;color:var(--g);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1.2rem;">New Book</p><div class="fr"><label class="fl">Book Title</label><input class="fi" id="e_t" placeholder="Title"></div><div class="fr"><label class="fl">Author</label><input class="fi" id="e_a" placeholder="Author"></div><div class="fr"><label class="fl">Price (e.g. ₹299)</label><input class="fi" id="e_p" placeholder="₹299"></div><div class="fr"><label class="fl">Tags</label><input class="fi" id="e_tg" placeholder="Dark Psychology, Discipline"></div><div class="fr"><label class="fl">Short Description</label><input class="fi" id="e_d" placeholder="One-line description"></div><div class="fr"><label class="fl">Free Chapter Title</label><input class="fi" id="e_ch" placeholder="Chapter title"></div><div class="fr"><label class="fl">Free Preview Text</label><textarea class="fi" id="e_ft" rows="5" style="resize:vertical;" placeholder="Free chapter text..."></textarea></div><div class="fr"><label class="fl">Locked / Blurred Text</label><textarea class="fi" id="e_bt" rows="5" style="resize:vertical;" placeholder="Blurred teaser text..."></textarea></div><div class="fr"><label class="fl">Upload PDF</label><label class="upz" for="pdfNew"><input type="file" id="pdfNew" accept=".pdf" onchange="newPDF=this.files[0];document.getElementById('npst').textContent=this.files[0]?'✓ '+this.files[0].name:'';"><p>Drop PDF here or <strong>click to browse</strong></p><div class="upst" id="npst">No PDF yet</div></label></div>`;}
+
+function saveEdits(){
+  if(editId==='new'){const t=document.getElementById('e_t').value.trim();if(!t){alert('Book title required.');return;}books.push({id:books.length,title:t,author:document.getElementById('e_a').value.trim()||'INSPIREX Editorial',tags:document.getElementById('e_tg').value.split(',').map(x=>x.trim()).filter(Boolean),desc:document.getElementById('e_d').value.trim()||'',price:document.getElementById('e_p').value.trim()||'₹299',priceNum:parseInt((document.getElementById('e_p').value.match(/\d+/)||['299'])[0]),chapter:document.getElementById('e_ch').value.trim()||'Chapter One',freeText:document.getElementById('e_ft').value.trim()||'',blurText:document.getElementById('e_bt').value.trim()||'',pdfName:newPDF?newPDF.name:'',pdfFile:newPDF||null,cover:'bk-bg'});newPDF=null;}
+  else if(editId!==null){const b=books[editId];b.title=document.getElementById('e_t').value.trim()||b.title;b.author=document.getElementById('e_a').value.trim()||b.author;b.price=document.getElementById('e_p').value.trim()||b.price;b.priceNum=parseInt((b.price.match(/\d+/)||['299'])[0]);b.tags=document.getElementById('e_tg').value.split(',').map(x=>x.trim()).filter(Boolean);b.desc=document.getElementById('e_d').value.trim()||b.desc;b.chapter=document.getElementById('e_ch').value.trim()||b.chapter;b.freeText=document.getElementById('e_ft').value.trim()||b.freeText;b.blurText=document.getElementById('e_bt').value.trim()||b.blurText;}
+  renderBooks();closeAdm();
+}
+function closeSuc(){document.getElementById('sucOv').classList.remove('open');document.body.style.overflow='';}
+document.getElementById('sucOv').addEventListener('click',function(e){if(e.target===this)closeSuc();});
+
+renderBooks();
+</script>
+</body>
+</html>
